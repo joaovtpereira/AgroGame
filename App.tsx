@@ -1,109 +1,66 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, {useRef} from 'react';
+import {SafeAreaView} from 'react-native';
+import {Form} from '@unform/mobile';
+import {FormHandles} from '@unform/core';
+import getValidationErrors from './App/utils/getValidationErrors';
+import * as yup from 'yup';
+import Input from './App/Components/Input';
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+interface Teste {
+	email: string;
+}
 
 const App: React.FC = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+	const formRef = useRef<FormHandles>(null);
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+	async function handleSignIn(data: Teste) {
+		try {
+			formRef?.current?.setErrors({});
+			const validationSchema = yup.object().shape({
+				Email: yup
+					.string()
+					.email('Digite um e-mail válido.')
+					.required('E-mail obrigatório.'),
+			});
+
+			await validationSchema.validate(data, {
+				abortEarly: false,
+			});
+		} catch (err) {
+			if (err instanceof yup.ValidationError) {
+				const errors = getValidationErrors(err);
+				formRef?.current?.setErrors(errors);
+			}
+		}
+	}
+	return (
+		<>
+			<SafeAreaView style={{paddingVertical: 8, paddingHorizontal: 8}}>
+				<Form onSubmit={handleSignIn} ref={formRef}>
+					<Input
+						name="Email"
+						icon="ios-mail-outline"
+						autoCapitalize="none"
+						autoCorrect={false}
+						placeholder="Email"
+						returnKeyType="next"
+						error={formRef.current?.getErrors}
+					/>
+					<Input
+						name="Password"
+						placeholder="Senha"
+						icon="ios-key-outline"
+						secureTextEntry
+						returnKeyType="send"
+						error={formRef.current?.getErrors}
+						onSubmitEditing={() => {
+							formRef.current?.submitForm();
+						}}
+					/>
+				</Form>
+			</SafeAreaView>
+		</>
+	);
+};
 
 export default App;
