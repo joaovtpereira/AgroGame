@@ -4,6 +4,10 @@ interface InputContainerProps {
 	hasError: boolean;
 }
 
+interface TextInputProps {
+	color?: string;
+}
+
 export const Container = styled.View`
 	width: 100%;
 	flex-direction: column;
@@ -26,10 +30,10 @@ export const InputContainer = styled.View<InputContainerProps>`
 		`}
 `;
 
-export const TextInput = styled.TextInput`
+export const TextInput = styled.TextInput<TextInputProps>`
 	max-width: 90%;
 	padding-left: 16px;
-	color: #000;
+	color: ${({color}) => color || '#000'};
 	font-size: 16px;
 	font-family: 'RobotoSlab-Regular';
 `;

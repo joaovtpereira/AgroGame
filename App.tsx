@@ -5,6 +5,9 @@ import {FormHandles} from '@unform/core';
 import getValidationErrors from './App/utils/getValidationErrors';
 import * as yup from 'yup';
 import Input from './App/Components/Input';
+import Typography from './App/Components/Typography';
+import Button from './App/Components/Button';
+import PhotoUpload from './App/Components/PhotoUpload';
 
 interface Teste {
 	email: string;
@@ -36,6 +39,10 @@ const App: React.FC = () => {
 	return (
 		<>
 			<SafeAreaView style={{paddingVertical: 8, paddingHorizontal: 8}}>
+				<PhotoUpload />
+				<Typography variant="title" color="#125629">
+					FarmGamer
+				</Typography>
 				<Form onSubmit={handleSignIn} ref={formRef}>
 					<Input
 						name="Email"
@@ -44,6 +51,7 @@ const App: React.FC = () => {
 						autoCorrect={false}
 						placeholder="Email"
 						returnKeyType="next"
+						color="#125629"
 						error={formRef.current?.getErrors}
 					/>
 					<Input
@@ -52,11 +60,16 @@ const App: React.FC = () => {
 						icon="ios-key-outline"
 						secureTextEntry
 						returnKeyType="send"
+						color="#125629"
 						error={formRef.current?.getErrors}
 						onSubmitEditing={() => {
 							formRef.current?.submitForm();
 						}}
 					/>
+					<Button label="Cadastrar" />
+					<Typography variant="subtitle" color="#125629">
+						Quero me cadastrar
+					</Typography>
 				</Form>
 			</SafeAreaView>
 		</>

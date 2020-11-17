@@ -15,6 +15,7 @@ import {Container, InputContainer, TextInput, Text} from './styles';
 interface InputProps extends TextInputProps {
 	name: string;
 	icon: string;
+	color?: string;
 }
 
 interface InputValueReference {
@@ -26,7 +27,7 @@ interface InputRef {
 }
 
 const Input: React.RefForwardingComponent<InputRef, InputProps> = (
-	{name, icon, ...rest},
+	{name, icon, color, ...rest},
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	ref,
 ) => {
@@ -60,11 +61,12 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
 	return (
 		<Container>
 			<InputContainer hasError={!!error}>
-				<Icon name={icon} size={20} color="black" />
+				<Icon name={icon} size={20} color={color ? color : '#000'} />
 				<TextInput
 					ref={inputElementRef}
+					color={color}
 					keyboardAppearance="dark"
-					placeholderTextColor="#666360"
+					placeholderTextColor={color ? color : '#666360'}
 					defaultValue={defaultValue}
 					onChangeText={(value) => {
 						inputValueRef.current.value = value.trim();
