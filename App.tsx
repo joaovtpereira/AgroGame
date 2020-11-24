@@ -38,7 +38,12 @@ const App: React.FC = () => {
 	}
 	return (
 		<>
-			<SafeAreaView style={{paddingVertical: 8, paddingHorizontal: 8}}>
+			<SafeAreaView
+				style={{
+					paddingVertical: 8,
+					paddingHorizontal: 8,
+					backgroundColor: ' #FFF',
+				}}>
 				<PhotoUpload />
 				<Typography variant="title" color="#125629">
 					FarmGamer

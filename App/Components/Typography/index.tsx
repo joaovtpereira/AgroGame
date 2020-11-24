@@ -1,7 +1,8 @@
 import React from 'react';
+import {TextProps} from 'react-native';
 import {Text} from './styles';
 
-export interface TypographyProps {
+interface TypographyProps extends TextProps {
 	variant: string;
 	color?: string;
 	paddingVertical?: number;
@@ -14,6 +15,7 @@ const Typography: React.FC<TypographyProps> = ({
 	paddingVertical,
 	paddingHorizontal,
 	children,
+	...props
 }) => {
 	return (
 		<Text
@@ -21,7 +23,8 @@ const Typography: React.FC<TypographyProps> = ({
 			color={color}
 			as={Text}
 			paddingVertical={paddingVertical}
-			paddingHorizontal={paddingHorizontal}>
+			paddingHorizontal={paddingHorizontal}
+			{...props}>
 			{children}
 		</Text>
 	);

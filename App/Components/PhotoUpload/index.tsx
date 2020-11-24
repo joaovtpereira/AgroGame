@@ -29,9 +29,9 @@ const PhotoUpload: React.FC = ({photo, setPhoto, image}) => {
 			{!photo?.uri && (
 				<Icon
 					name="ios-camera-outline"
-					size={24}
+					size={32}
 					color="#666"
-					style={{top: 74}}
+					style={{top: 104}}
 				/>
 			)}
 			{photo?.uri && <PreviewImage source={{uri: photo.uri}} />}
