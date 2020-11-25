@@ -8,30 +8,30 @@ interface TextInputProps {
 	color?: string;
 }
 
-export const Container = styled.View`
+export const Container = styled.View<InputContainerProps>`
 	width: 100%;
 	flex-direction: column;
-	margin-bottom: 24px;
+	margin-top: 24px;
 	background: rgba(0, 0, 0, 0.05);
 	border-radius: 16px;
+	${({hasError}) =>
+		hasError &&
+		css`
+			border: 1px solid #c53030;
+		`}
 `;
 
-export const InputContainer = styled.View<InputContainerProps>`
+export const InputContainer = styled.View`
 	max-width: 100%;
 	background: transparent;
 	padding: 0 16px;
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: center;
-	${({hasError}) =>
-		hasError &&
-		css`
-			border-color: #c53030;
-		`}
 `;
 
 export const TextInput = styled.TextInput<TextInputProps>`
-	max-width: 90%;
+	width: 100%;
 	padding-left: 16px;
 	color: ${({color}) => color || '#000'};
 	font-size: 16px;
@@ -47,5 +47,6 @@ export const Text = styled.Text<InputContainerProps>`
 		hasError &&
 		css`
 			display: flex;
+			padding-left: 8px;
 		`}
 `;

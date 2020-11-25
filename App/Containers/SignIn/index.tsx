@@ -1,5 +1,4 @@
 import React, {useRef} from 'react';
-import {SafeAreaView} from 'react-native';
 import {Form} from '@unform/mobile';
 import {FormHandles} from '@unform/core';
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -7,10 +6,12 @@ import * as yup from 'yup';
 import Input from '../../Components/Input';
 import Typography from '../../Components/Typography';
 import Button from '../../Components/Button';
-import PhotoUpload from '../../Components/PhotoUpload';
 
-interface Teste {
-	email: string;
+import firestore from '@react-native-firebase/firestore';
+
+interface FormData {
+	Email: string;
+	Password: string;
 }
 
 interface Props {
@@ -22,19 +23,29 @@ import {Container, TitleWrapper} from './styles';
 const App: React.FC<Props> = ({navigation}) => {
 	const formRef = useRef<FormHandles>(null);
 
-	async function handleSignIn(data: Teste) {
+	async function handleSignIn(data: FormData) {
 		try {
 			formRef?.current?.setErrors({});
 			const validationSchema = yup.object().shape({
-				Email: yup
+				email: yup
 					.string()
 					.email('Digite um e-mail válido.')
 					.required('E-mail obrigatório.'),
+				Password: yup.string().required('Senha obrigatória.'),
 			});
 
 			await validationSchema.validate(data, {
 				abortEarly: false,
 			});
+
+			firestore()
+				.collection('Users')
+				.where('email', '==', formRef.current?.getFieldValue('email'))
+				.where('password', '==', formRef.current?.getFieldValue('Password'))
+				.get()
+				.then((querySnapshot) => {
+					console.log(querySnapshot.docs);
+				});
 		} catch (err) {
 			if (err instanceof yup.ValidationError) {
 				const errors = getValidationErrors(err);
@@ -51,14 +62,13 @@ const App: React.FC<Props> = ({navigation}) => {
 			</TitleWrapper>
 			<Form onSubmit={handleSignIn} ref={formRef}>
 				<Input
-					name="Email"
+					name="email"
 					icon="ios-mail-outline"
 					autoCapitalize="none"
 					autoCorrect={false}
 					placeholder="Email"
 					returnKeyType="next"
 					color="#125629"
-					error={formRef.current?.getErrors}
 				/>
 				<Input
 					name="Password"
@@ -67,12 +77,12 @@ const App: React.FC<Props> = ({navigation}) => {
 					secureTextEntry
 					returnKeyType="send"
 					color="#125629"
-					error={formRef.current?.getErrors}
-					onSubmitEditing={() => {
-						formRef.current?.submitForm();
-					}}
 				/>
-				<Button label="Cadastrar" />
+				<Button
+					label="Entrar"
+					style={{marginTop: 16}}
+					onPress={() => formRef.current?.submitForm()}
+				/>
 				<TitleWrapper>
 					<Typography
 						variant="subtitle"

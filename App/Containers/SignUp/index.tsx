@@ -2,6 +2,9 @@ import {FormHandles} from '@unform/core';
 import {Form} from '@unform/mobile';
 import React, {useRef} from 'react';
 import Button from '../../Components/Button';
+import database from '@react-native-firebase/database';
+import firestore from '@react-native-firebase/firestore';
+
 import * as yup from 'yup';
 
 import Input from '../../Components/Input';
@@ -11,8 +14,11 @@ import getValidationErrors from '../../utils/getValidationErrors';
 
 import {Container, ScrollContent, TitleWrapper, WrapperPhoto} from './styles';
 
-interface Teste {
-	email: string;
+interface FormData {
+	Name: string;
+	Email: string;
+	Password: string;
+	ConfirmPassword: string;
 }
 
 interface Props {
@@ -22,19 +28,49 @@ interface Props {
 const SignUp: React.FC<Props> = ({navigation}) => {
 	const formRef = useRef<FormHandles>(null);
 
-	async function handleSignUp(data: Teste) {
+	async function handleSignUp(data: FormData) {
 		try {
 			formRef?.current?.setErrors({});
 			const validationSchema = yup.object().shape({
 				Email: yup
 					.string()
 					.email('Digite um e-mail válido.')
-					.required('E-mail obrigatório.'),
+					.required('Nome obrigatório.'),
+				Name: yup.string().required('E-mail obrigatório.'),
+				Password: yup
+					.string()
+					.required('Senha é obrigatória')
+					.min(8, 'Mínimo de 8 caracteres'),
+				ConfirmPassword: yup
+					.string()
+					.required('Confirmação de senha é obrigatória')
+					.oneOf([yup.ref('Password'), null], 'As senhas não correspondem'),
 			});
 
 			await validationSchema.validate(data, {
 				abortEarly: false,
 			});
+
+			// database()
+			// 	.ref('/users/')
+			// 	.push()
+			// 	.set({
+			// 		user_name: formRef.current?.getFieldValue('Name'),
+			// 		email: formRef.current?.getFieldValue('Email'),
+			// 		password: formRef.current?.getFieldValue('Password'),
+			// 	})
+			// 	.then(() => console.log('Data set.'));
+
+			firestore()
+				.collection('Users')
+				.add({
+					user_name: formRef.current?.getFieldValue('Name'),
+					email: formRef.current?.getFieldValue('Email'),
+					password: formRef.current?.getFieldValue('Password'),
+				})
+				.then(() => {
+					console.log('User added!');
+				});
 		} catch (err) {
 			if (err instanceof yup.ValidationError) {
 				const errors = getValidationErrors(err);
@@ -58,7 +94,6 @@ const SignUp: React.FC<Props> = ({navigation}) => {
 						placeholder="Nome completo"
 						returnKeyType="next"
 						color="#125629"
-						error={formRef.current?.getErrors}
 					/>
 					<Input
 						name="Email"
@@ -68,7 +103,6 @@ const SignUp: React.FC<Props> = ({navigation}) => {
 						placeholder="Email"
 						returnKeyType="next"
 						color="#125629"
-						error={formRef.current?.getErrors}
 					/>
 					<Input
 						name="Password"
@@ -77,24 +111,20 @@ const SignUp: React.FC<Props> = ({navigation}) => {
 						secureTextEntry
 						returnKeyType="send"
 						color="#125629"
-						error={formRef.current?.getErrors}
-						onSubmitEditing={() => {
-							formRef.current?.submitForm();
-						}}
 					/>
 					<Input
-						name="Password"
+						name="ConfirmPassword"
 						placeholder="Confirmar senha"
 						icon="ios-key-outline"
 						secureTextEntry
 						returnKeyType="send"
 						color="#125629"
-						error={formRef.current?.getErrors}
-						onSubmitEditing={() => {
-							formRef.current?.submitForm();
-						}}
 					/>
-					<Button label="Cadastrar" />
+					<Button
+						label="Cadastrar"
+						style={{marginTop: 24}}
+						onPress={() => formRef.current?.submitForm()}
+					/>
 					<TitleWrapper>
 						<Typography
 							variant="subtitle"

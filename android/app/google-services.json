@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1020393291100",
+    "firebase_url": "https://agrogame-bf3fc.firebaseio.com",
+    "project_id": "agrogame-bf3fc",
+    "storage_bucket": "agrogame-bf3fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020393291100:android:5b4645c1db422807d41599",
+        "android_client_info": {
+          "package_name": "com.agrogame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020393291100-udaqdk74me4i0hrnrnrtnsrctbebn1bj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbjYiJGMFAh1gqVDcxE2_j5NAGnS_p5WA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020393291100-udaqdk74me4i0hrnrnrtnsrctbebn1bj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

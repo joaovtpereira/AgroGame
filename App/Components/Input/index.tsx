@@ -59,24 +59,30 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
 	}, []);
 
 	return (
-		<Container>
-			<InputContainer hasError={!!error}>
-				<Icon name={icon} size={20} color={color ? color : '#000'} />
-				<TextInput
-					ref={inputElementRef}
-					color={color}
-					keyboardAppearance="dark"
-					placeholderTextColor={color ? color : '#666360'}
-					defaultValue={defaultValue}
-					onChangeText={(value) => {
-						inputValueRef.current.value = value.trim();
-					}}
-					onBlur={handleInputBlur}
-					{...rest}
-				/>
-			</InputContainer>
+		<>
+			<Container hasError={!!error}>
+				<InputContainer>
+					<Icon
+						name={icon}
+						size={20}
+						color={error ? '#c53030' : color ? color : '#000'}
+					/>
+					<TextInput
+						ref={inputElementRef}
+						color={color}
+						keyboardAppearance="dark"
+						placeholderTextColor={error ? '#c53030' : color ? color : '#666360'}
+						defaultValue={defaultValue}
+						onChangeText={(value) => {
+							inputValueRef.current.value = value.trim();
+						}}
+						onBlur={handleInputBlur}
+						{...rest}
+					/>
+				</InputContainer>
+			</Container>
 			<Text hasError={!!error}>{error}</Text>
-		</Container>
+		</>
 	);
 };
 
