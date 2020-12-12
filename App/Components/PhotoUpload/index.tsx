@@ -19,7 +19,7 @@ const PhotoUpload: React.FC = ({photo, setPhoto, image}) => {
 		if (!data.uri) {
 			return;
 		}
-
+		console.log(data);
 		setPhoto(data);
 	};
 

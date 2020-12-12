@@ -11,6 +11,8 @@ export const Container = styled.TouchableOpacity`
 `;
 
 export const PreviewImage = styled.Image`
-	height: 100%;
-	width: 100%;
+	height: 240px;
+	width: 240px;
+
+	border-radius: 120px;
 `;

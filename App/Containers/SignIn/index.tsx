@@ -7,10 +7,10 @@ import Input from '../../Components/Input';
 import Typography from '../../Components/Typography';
 import Button from '../../Components/Button';
 
-import firestore from '@react-native-firebase/firestore';
+import database from '@react-native-firebase/database';
 
 interface FormData {
-	Email: string;
+	email: string;
 	Password: string;
 }
 
@@ -19,6 +19,7 @@ interface Props {
 }
 
 import {Container, TitleWrapper} from './styles';
+import {showMessage} from 'react-native-flash-message';
 
 const App: React.FC<Props> = ({navigation}) => {
 	const formRef = useRef<FormHandles>(null);
@@ -38,14 +39,25 @@ const App: React.FC<Props> = ({navigation}) => {
 				abortEarly: false,
 			});
 
-			firestore()
-				.collection('Users')
-				.where('email', '==', formRef.current?.getFieldValue('email'))
-				.where('password', '==', formRef.current?.getFieldValue('Password'))
-				.get()
-				.then((querySnapshot) => {
-					console.log(querySnapshot.docs);
-				});
+			database()
+				.ref('users')
+				.once('value')
+				.then((snapshot) => {
+					for (var key in snapshot.val()) {
+						if (
+							data.email === snapshot.val()[key].email &&
+							data.Password === snapshot.val()[key].password
+						) {
+							navigation.navigate('Home');
+						} else {
+							showMessage({
+								message: 'Email ou senha incorretas!',
+								type: 'danger',
+							});
+						}
+					}
+				})
+				.catch((error) => console.log(error));
 		} catch (err) {
 			if (err instanceof yup.ValidationError) {
 				const errors = getValidationErrors(err);

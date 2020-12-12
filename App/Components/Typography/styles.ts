@@ -10,9 +10,19 @@ interface TextProps {
 const textStyles = {
 	title: css`
 		font-size: 40px;
+		font-weight: bold;
+		text-align: center;
+	`,
+	action: css`
+		font-size: 32px;
+		font-weight: bold;
 	`,
 	subtitle: css`
 		font-size: 16px;
+	`,
+	primary: css`
+		font-size: 20px;
+		font-weight: bold;
 	`,
 };
 

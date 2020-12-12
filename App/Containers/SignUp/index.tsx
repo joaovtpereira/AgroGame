@@ -1,9 +1,8 @@
 import {FormHandles} from '@unform/core';
 import {Form} from '@unform/mobile';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import Button from '../../Components/Button';
 import database from '@react-native-firebase/database';
-import firestore from '@react-native-firebase/firestore';
 
 import * as yup from 'yup';
 
@@ -13,6 +12,7 @@ import Typography from '../../Components/Typography';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import {Container, ScrollContent, TitleWrapper, WrapperPhoto} from './styles';
+import {showMessage} from 'react-native-flash-message';
 
 interface FormData {
 	Name: string;
@@ -27,6 +27,7 @@ interface Props {
 
 const SignUp: React.FC<Props> = ({navigation}) => {
 	const formRef = useRef<FormHandles>(null);
+	const [photo, setPhoto] = useState();
 
 	async function handleSignUp(data: FormData) {
 		try {
@@ -51,25 +52,21 @@ const SignUp: React.FC<Props> = ({navigation}) => {
 				abortEarly: false,
 			});
 
-			// database()
-			// 	.ref('/users/')
-			// 	.push()
-			// 	.set({
-			// 		user_name: formRef.current?.getFieldValue('Name'),
-			// 		email: formRef.current?.getFieldValue('Email'),
-			// 		password: formRef.current?.getFieldValue('Password'),
-			// 	})
-			// 	.then(() => console.log('Data set.'));
-
-			firestore()
-				.collection('Users')
-				.add({
+			database()
+				.ref('/users/')
+				.push()
+				.set({
 					user_name: formRef.current?.getFieldValue('Name'),
 					email: formRef.current?.getFieldValue('Email'),
 					password: formRef.current?.getFieldValue('Password'),
+					user_image: photo.fileName,
 				})
 				.then(() => {
-					console.log('User added!');
+					showMessage({
+						message: 'Cadastro realizado com sucesso!',
+						type: 'success',
+					});
+					navigation.navigate('SignIn');
 				});
 		} catch (err) {
 			if (err instanceof yup.ValidationError) {
@@ -83,7 +80,7 @@ const SignUp: React.FC<Props> = ({navigation}) => {
 		<Container>
 			<ScrollContent>
 				<WrapperPhoto>
-					<PhotoUpload />
+					<PhotoUpload photo={photo} setPhoto={setPhoto} />
 				</WrapperPhoto>
 				<Form onSubmit={handleSignUp} ref={formRef}>
 					<Input

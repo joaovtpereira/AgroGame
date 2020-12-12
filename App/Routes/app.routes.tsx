@@ -3,11 +3,12 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import SignIn from '../Containers/SignIn';
 import SignUp from '../Containers/SignUp';
+import Home from '../Containers/Home';
 
 const AppStack = createStackNavigator();
 
 const AppRoutes: React.FC = () => (
-	<AppStack.Navigator>
+	<AppStack.Navigator initialRouteName="Home">
 		<AppStack.Screen
 			name="SignIn"
 			component={SignIn}
@@ -16,6 +17,11 @@ const AppRoutes: React.FC = () => (
 		<AppStack.Screen
 			name="SignUp"
 			component={SignUp}
+			options={{headerShown: false}}
+		/>
+		<AppStack.Screen
+			name="Home"
+			component={Home}
 			options={{headerShown: false}}
 		/>
 	</AppStack.Navigator>
