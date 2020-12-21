@@ -3,12 +3,12 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import SignIn from '../Containers/SignIn';
 import SignUp from '../Containers/SignUp';
-import Home from '../Containers/Home';
+import Main from './drawer.routes';
 
 const AppStack = createStackNavigator();
 
 const AppRoutes: React.FC = () => (
-	<AppStack.Navigator initialRouteName="Home">
+	<AppStack.Navigator initialRouteName="Main">
 		<AppStack.Screen
 			name="SignIn"
 			component={SignIn}
@@ -20,8 +20,8 @@ const AppRoutes: React.FC = () => (
 			options={{headerShown: false}}
 		/>
 		<AppStack.Screen
-			name="Home"
-			component={Home}
+			name="Main"
+			component={Main}
 			options={{headerShown: false}}
 		/>
 	</AppStack.Navigator>

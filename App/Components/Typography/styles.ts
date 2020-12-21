@@ -24,6 +24,9 @@ const textStyles = {
 		font-size: 20px;
 		font-weight: bold;
 	`,
+	label: css`
+		font-size: 10px;
+	`,
 };
 
 export const Text = styled.Text<TextProps>`
