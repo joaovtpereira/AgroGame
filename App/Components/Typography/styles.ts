@@ -4,8 +4,9 @@ import {css} from 'styled-components';
 interface TextProps {
 	variant: string;
 	color: string;
-	paddingVertical: number;
-	paddingHorizontal: number;
+	paddingVertical: string;
+	paddingHorizontal: string;
+	maxWidth?: string;
 }
 const textStyles = {
 	title: css`
@@ -20,6 +21,10 @@ const textStyles = {
 	subtitle: css`
 		font-size: 16px;
 	`,
+	subtitleBold: css`
+		font-size: 14px;
+		font-weight: bold;
+	`,
 	primary: css`
 		font-size: 20px;
 		font-weight: bold;
@@ -32,4 +37,9 @@ const textStyles = {
 export const Text = styled.Text<TextProps>`
 	${({variant}) => textStyles[variant]}
 	color: ${({color}) => color || '#212121'};
+	padding-left: ${({paddingHorizontal}) => paddingHorizontal || '0px'};
+	padding-right: ${({paddingHorizontal}) => paddingHorizontal || '0px'};
+	padding-top: ${({paddingVertical}) => paddingVertical || '0px'};
+	padding-bottom: ${({paddingVertical}) => paddingVertical || '0px'};
+	max-width: ${({maxWidth}) => maxWidth || '100%'};
 `;

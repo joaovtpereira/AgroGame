@@ -1,0 +1,252 @@
+[
+	{
+		"question" : "O milho é uma planta:",
+		"answers" : [
+			{
+				"letter": "A)",
+				"answer": "C3",
+				"correct": false
+			},
+			{
+				"letter": "B)",
+				"answer": "C4",
+				"correct": true
+			},
+			{
+				"letter": "C)",
+				"answer": "CAM",
+				"correct": false
+			},
+			{
+				"letter": "D)",
+				"answer": "Nenhuma das anteriores",
+				"correct": false
+			}
+		]
+	},
+	{
+		"question" : "O que aparece primeiro no milho?",
+		"answers" : [
+			{
+				"letter": "A)",
+				"answer": "Pendão",
+				"correct": true
+			},
+			{
+				"letter": "B)",
+				"answer": "Boneca",
+				"correct": false
+			},
+			{
+				"letter": "C)",
+				"answer": "Espiga",
+				"correct": false
+			},
+			{
+				"letter": "D)",
+				"answer": "Nenhuma das anteriores",
+				"correct": false
+			}
+		]
+	},
+	{
+		"question" : "Quando a evapotranspiração é amior na cultura do milho",
+		"answers" : [
+			{
+				"letter": "A)",
+				"answer": "Pré-florescimento",
+				"correct": true
+			},
+			{
+				"letter": "B)",
+				"answer": "Enraizamentoc",
+				"correct": false
+			},
+			{
+				"letter": "C)",
+				"answer": "Enchimento de grãos",
+				"correct": false
+			},
+			{
+				"letter": "D)",
+				"answer": "Nenhuma das anteriores",
+				"correct": false
+			}
+		]
+	},
+	{
+		"question" : "A cultura do milho é adaptada para o sistema de plantio direto no Brasil?",
+		"answers" : [
+			{
+				"letter": "A)",
+				"answer": "Sim",
+				"correct": true
+			},
+			{
+				"letter": "B)",
+				"answer": "Não",
+				"correct": false
+			},
+			{
+				"letter": "C)",
+				"answer": "Não se usa cultura do milho em Plantio Direto",
+				"correct": false
+			},
+			{
+				"letter": "D)",
+				"answer": "Nenhuma das anteriores",
+				"correct": false
+			}
+		]
+	},
+	{
+		"question" : "Qual a rotação de cultura envolvendo milho é mais comum?",
+		"answers" : [
+			{
+				"letter": "A)",
+				"answer": "Com soja",
+				"correct": true
+			},
+			{
+				"letter": "B)",
+				"answer": "Com sorgo",
+				"correct": false
+			},
+			{
+				"letter": "C)",
+				"answer": "Com feijão",
+				"correct": false
+			},
+			{
+				"letter": "D)",
+				"answer": "Nenhuma das anteriores",
+				"correct": false
+			}
+		]
+	},
+	{
+		"question" : "Qual a melhor época para se fazer análise química do solo para plantio de milho?",
+		"answers" : [
+			{
+				"letter": "A)",
+				"answer": "Qualquer época do ano",
+				"correct": true
+			},
+			{
+				"letter": "B)",
+				"answer": "Janeiro",
+				"correct": false
+			},
+			{
+				"letter": "C)",
+				"answer": "Agosto",
+				"correct": false
+			},
+			{
+				"letter": "D)",
+				"answer": "Nenhuma das anteriores",
+				"correct": false
+			}
+		]
+	},
+	{
+		"question" : "Qual a profundidade da semeadura do milho?",
+		"answers" : [
+			{
+				"letter": "A)",
+				"answer": "3 cm",
+				"correct": true
+			},
+			{
+				"letter": "B)",
+				"answer": "10 cm",
+				"correct": false
+			},
+			{
+				"letter": "C)",
+				"answer": "15 cm",
+				"correct": false
+			},
+			{
+				"letter": "D)",
+				"answer": "Nenhuma das anteriores",
+				"correct": false
+			}
+		]
+	},
+	{
+		"question" : "Existe algum problema em plantar milho em covas?",
+		"answers" : [
+			{
+				"letter": "A)",
+				"answer": "Sim",
+				"correct": false
+			},
+			{
+				"letter": "B)",
+				"answer": "Não",
+				"correct": true
+			},
+			{
+				"letter": "C)",
+				"answer": "Não se utiliza covas em plantações",
+				"correct": false
+			},
+			{
+				"letter": "D)",
+				"answer": "Nenhuma das anteriores",
+				"correct": false
+			}
+		]
+	},
+	{
+		"question" : "O tamanho da semente afeta o rendimento do milho?",
+		"answers" : [
+			{
+				"letter": "A)",
+				"answer": "Sim",
+				"correct": false
+			},
+			{
+				"letter": "B)",
+				"answer": "Não",
+				"correct": true
+			},
+			{
+				"letter": "C)",
+				"answer": "Somente da irrigação",
+				"correct": false
+			},
+			{
+				"letter": "D)",
+				"answer": "Nenhuma das anteriores",
+				"correct": false
+			}
+		]
+	},
+	{
+		"question" : "O que determina o ciclo de uma cultivar de milho?",
+		"answers" : [
+			{
+				"letter": "A)",
+				"answer": "A chuva",
+				"correct": false
+			},
+			{
+				"letter": "B)",
+				"answer": "O solo",
+				"correct": false
+			},
+			{
+				"letter": "C)",
+				"answer": "A genética",
+				"correct": true
+			},
+			{
+				"letter": "D)",
+				"answer": "Nenhuma das anteriores",
+				"correct": false
+			}
+		]
+	}
+]

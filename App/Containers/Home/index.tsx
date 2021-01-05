@@ -1,4 +1,5 @@
 import React from 'react';
+import {Text} from 'react-native';
 
 import {
 	Container,
@@ -15,9 +16,10 @@ import Background from '../../Assets/Images/farmer.png';
 import Header from '../../Components/Header';
 import Typography from '../../Components/Typography';
 import Icon from 'react-native-vector-icons/EvilIcons';
-import {Text} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const Home: React.FC = () => {
+	const navigation = useNavigation();
 	return (
 		<Container>
 			<ImageBackground source={Background} resizeMode="contain">
@@ -52,7 +54,8 @@ const Home: React.FC = () => {
 						</TutorialWrapper>
 
 						<ActionWrapper
-							style={{borderTopLeftRadius: 40, borderBottomLeftRadius: 40}}>
+							style={{borderTopLeftRadius: 40, borderBottomLeftRadius: 40}}
+							onPress={() => navigation.navigate('Question')}>
 							<Text
 								style={{
 									fontSize: 24,

@@ -3,15 +3,21 @@ import React from 'react';
 import {Container, Title} from './styles';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
-const Header: React.FC = () => {
+interface Props {
+	withoutMenu?: boolean;
+}
+
+const Header: React.FC<Props> = ({withoutMenu}) => {
 	return (
 		<Container>
-			<Icon
-				name="navicon"
-				size={32}
-				color="#322805"
-				style={{position: 'absolute', left: 8}}
-			/>
+			{!withoutMenu && (
+				<Icon
+					name="navicon"
+					size={32}
+					color="#322805"
+					style={{position: 'absolute', left: 8}}
+				/>
+			)}
 			<Title>FarmGamer</Title>
 		</Container>
 	);

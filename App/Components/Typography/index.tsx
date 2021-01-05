@@ -5,8 +5,9 @@ import {Text} from './styles';
 interface TypographyProps extends TextProps {
 	variant: string;
 	color?: string;
-	paddingVertical?: number;
-	paddingHorizontal?: number;
+	paddingVertical?: string;
+	paddingHorizontal?: string;
+	maxWidth?: string;
 }
 
 const Typography: React.FC<TypographyProps> = ({
@@ -15,6 +16,7 @@ const Typography: React.FC<TypographyProps> = ({
 	paddingVertical,
 	paddingHorizontal,
 	children,
+	maxWidth,
 	...props
 }) => {
 	return (
@@ -24,6 +26,7 @@ const Typography: React.FC<TypographyProps> = ({
 			as={Text}
 			paddingVertical={paddingVertical}
 			paddingHorizontal={paddingHorizontal}
+			maxWidth={maxWidth}
 			{...props}>
 			{children}
 		</Text>
