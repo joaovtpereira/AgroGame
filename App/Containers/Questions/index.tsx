@@ -1,9 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
+import {showMessage} from 'react-native-flash-message';
 
 import Background from '../../Assets/Images/primeiraEtapa.png';
 import Header from '../../Components/Header';
-import Question from '../../Components/Question';
+import Loading from '../../Components/Loading';
+import QuestionWrapper from '../../Components/QuestionWrapper';
 import Typography from '../../Components/Typography';
 import questions_1 from '../../utils/questions_1level.json';
 import {
@@ -14,14 +16,19 @@ import {
 	Image,
 	DataWrapper,
 	Row,
-	QuestionWrapper,
 } from './styles';
 
 const Questions: React.FC = () => {
 	const [seconds, setSeconds] = useState(59);
 	const [minutes, setMinutes] = useState(29);
 	const [isActive, setIsActive] = useState(true);
+
 	const [step, setStep] = useState(1);
+	const [isLoading, setIsLoading] = useState(true);
+	const [questionNumber, setQuestionNumber] = useState(0);
+	const [questions, setQuestions] = useState([]);
+
+	const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
 
 	useEffect(() => {
 		let interval = null;
@@ -41,11 +48,66 @@ const Questions: React.FC = () => {
 		return () => clearInterval(interval);
 	}, [isActive, minutes, seconds]);
 
-	const handleStep = () => {
+	useEffect(() => {
+		let questionsArray = [];
+		let numberQuestions = 0;
+		for (; numberQuestions < 6; numberQuestions = numberQuestions + 1) {
+			let randomQuestion =
+				questions_1[Math.floor(Math.random() * questions_1.length)];
+
+			if (numberQuestions > 0) {
+				while (haveThisQuestion(randomQuestion, questionsArray) === true) {
+					randomQuestion =
+						questions_1[Math.floor(Math.random() * questions_1.length)];
+				}
+			}
+
+			questionsArray.push(randomQuestion);
+		}
+		setQuestions(questionsArray);
+	}, []);
+
+	useEffect(() => {
+		setIsLoading(false);
+	}, [questions]);
+
+	function haveThisQuestion(question: any, questionsArray: any) {
+		const arrayQuestionEqual = questionsArray.filter(
+			(quest) => quest.id === question.id,
+		);
+		return arrayQuestionEqual.length > 0 ? true : false;
+	}
+
+	function handleStep() {
 		if (step > 0) {
 			setStep(0);
+			setQuestions((prevState) => [
+				...prevState.slice(0, questionNumber),
+				...prevState.slice(questionNumber + 1),
+			]);
 		}
-	};
+	}
+
+	function handleSubmitAnswersQuestion(indexAnswer: number) {
+		setSelectedAnswer(indexAnswer);
+	}
+
+	function handleSubmit() {
+		if (selectedAnswer === null) {
+			showMessage({
+				type: 'warning',
+				message: 'Por favor, selecione uma resposta.',
+			});
+		} else if (questionNumber === 4) {
+			showMessage({
+				type: 'success',
+				message: 'Respostas salvas com sucesso',
+			});
+		} else {
+			setQuestionNumber(questionNumber + 1);
+			setSelectedAnswer(null);
+		}
+	}
 
 	return (
 		<Container>
@@ -68,44 +130,28 @@ const Questions: React.FC = () => {
 						Tempo Restante: {minutes}:{seconds}
 					</Typography>
 				</Row>
-				<QuestionWrapper>
-					<Typography
-						variant="subtitleBold"
-						color="#544B4C"
-						paddingVertical="8px">
-						Exemplo de pergunta para ser respondida, de acordo com as
-						necessidades de tamanho que vamos ter?
-					</Typography>
-					<Question />
-					<Question />
-					<Question />
-					<Question />
-
-					<Typography
-						variant="subtitleBold"
-						color="#544B4C"
-						paddingHorizontal="2px"
-						paddingVertical="8px">
-						? Preciso de ajuda
-					</Typography>
-
-					<Typography
-						variant="subtitleBold"
-						color="#544B4C"
-						paddingHorizontal="2px">
-						Pulos Restantes: {step}
-					</Typography>
-				</QuestionWrapper>
-				<Button>
-					<Typography variant="primary" color="#000">
-						Próxima
-					</Typography>
-				</Button>
-				<ButtonStep onPress={handleStep}>
-					<Typography variant="primary" color="#fff">
-						Pular
-					</Typography>
-				</ButtonStep>
+				{isLoading ? (
+					<Loading size={48} color="#fff" />
+				) : (
+					<>
+						<QuestionWrapper
+							step={step}
+							selectedAnswer={selectedAnswer}
+							question={questions[questionNumber]}
+							handleSubmitAnswers={handleSubmitAnswersQuestion}
+						/>
+						<Button>
+							<Typography variant="primary" color="#000" onPress={handleSubmit}>
+								Próxima
+							</Typography>
+						</Button>
+						<ButtonStep onPress={handleStep}>
+							<Typography variant="primary" color="#fff">
+								Pular
+							</Typography>
+						</ButtonStep>
+					</>
+				)}
 			</DataWrapper>
 		</Container>
 	);

@@ -1,14 +1,32 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 
-import {Text} from 'react-native';
 import Typography from '../Typography';
-
 import {Container} from './styles';
 
-const Question: React.FC = () => {
+interface Answer {
+	letter: string;
+	answer: string;
+	correct: string;
+}
+
+interface QuestionProps {
+	answer: Answer;
+	indexAnswer: number;
+	isSelected: true | false;
+	handleSelectedAnswer: (indexAnswer: number) => void;
+}
+
+const Question: React.FC<QuestionProps> = ({
+	answer,
+	indexAnswer,
+	isSelected,
+	handleSelectedAnswer,
+}) => {
 	return (
 		<Container
+			selected={isSelected}
+			onPress={() => handleSelectedAnswer(indexAnswer)}
 			style={{
 				shadowColor: '#6e5d5e',
 				shadowOffset: {
@@ -22,9 +40,9 @@ const Question: React.FC = () => {
 			}}>
 			<Typography
 				variant="subtitleBold"
-				color="#6e5d5e"
+				color={isSelected ? '#fff' : '#6e5d5e'}
 				paddingHorizontal="8px">
-				A-) Resposta A
+				{answer.answer}
 			</Typography>
 		</Container>
 	);
