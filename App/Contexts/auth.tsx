@@ -6,6 +6,15 @@ interface AuthContextData {
 	user: User | null;
 	signOut: () => void;
 	signIn: (data: User) => void;
+	startQuestions: () => void;
+}
+
+interface Questions {
+	start: Date;
+	finish: true | false;
+	questions: any[];
+	asnwer_corrects: number;
+	response: any[];
 }
 
 interface User {
@@ -13,6 +22,7 @@ interface User {
 	user_name: string;
 	user_image: string;
 	time_course: string;
+	questions?: Questions;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -43,6 +53,21 @@ export const AuthProvider: React.FC = ({children}) => {
 		await AsyncStorage.setItem('@AgroGamer:user', JSON.stringify(newUser));
 	}
 
+	async function startQuestions() {
+		let newUser = user;
+
+		if (newUser !== null) {
+			newUser.questions = {
+				start: new Date(),
+				finish: false,
+				questions: [],
+				asnwer_corrects: 0,
+				response: [],
+			};
+			await AsyncStorage.setItem('@AgroGamer:user', JSON.stringify(newUser));
+		}
+	}
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -50,6 +75,7 @@ export const AuthProvider: React.FC = ({children}) => {
 				user: user,
 				signOut,
 				signIn,
+				startQuestions,
 			}}>
 			{children}
 		</AuthContext.Provider>
