@@ -7,6 +7,7 @@ import Header from '../../Components/Header';
 import Loading from '../../Components/Loading';
 import QuestionWrapper from '../../Components/QuestionWrapper';
 import Typography from '../../Components/Typography';
+import {useAuth} from '../../Contexts/auth';
 import questions_1 from '../../utils/questions_1level.json';
 import {
 	Button,
@@ -19,6 +20,7 @@ import {
 } from './styles';
 
 const Questions: React.FC = () => {
+	const {startQuestions, updadeStepQuestion, user, inEvidence} = useAuth();
 	const [seconds, setSeconds] = useState(59);
 	const [minutes, setMinutes] = useState(29);
 	const [isActive, setIsActive] = useState(true);
@@ -49,26 +51,40 @@ const Questions: React.FC = () => {
 	}, [isActive, minutes, seconds]);
 
 	useEffect(() => {
-		let questionsArray = [];
-		let numberQuestions = 0;
-		for (; numberQuestions < 6; numberQuestions = numberQuestions + 1) {
-			let randomQuestion =
-				questions_1[Math.floor(Math.random() * questions_1.length)];
+		function loadQuestions() {
+			let questionsArray = [];
+			let numberQuestions = 0;
+			for (; numberQuestions < 6; numberQuestions = numberQuestions + 1) {
+				let randomQuestion =
+					questions_1[Math.floor(Math.random() * questions_1.length)];
 
-			if (numberQuestions > 0) {
-				while (haveThisQuestion(randomQuestion, questionsArray) === true) {
-					randomQuestion =
-						questions_1[Math.floor(Math.random() * questions_1.length)];
+				if (numberQuestions > 0) {
+					while (haveThisQuestion(randomQuestion, questionsArray) === true) {
+						randomQuestion =
+							questions_1[Math.floor(Math.random() * questions_1.length)];
+					}
 				}
-			}
 
-			questionsArray.push(randomQuestion);
+				questionsArray.push(randomQuestion);
+			}
+			setQuestions(questionsArray);
 		}
-		setQuestions(questionsArray);
+		if (inEvidence) {
+			setQuestions(user?.questions[user.questions.length - 1].questions);
+			setStep(user?.questions[user.questions.length - 1].steps ?? 1);
+			setQuestionNumber(
+				user?.questions[user.questions.length - 1].response.length ?? 0,
+			);
+		} else {
+			loadQuestions();
+		}
 	}, []);
 
 	useEffect(() => {
 		setIsLoading(false);
+		if (!inEvidence) {
+			startQuestions(questions);
+		}
 	}, [questions]);
 
 	function haveThisQuestion(question: any, questionsArray: any) {
@@ -81,6 +97,7 @@ const Questions: React.FC = () => {
 	function handleStep() {
 		if (step > 0) {
 			setStep(0);
+			updadeStepQuestion(questionNumber);
 			setQuestions((prevState) => [
 				...prevState.slice(0, questionNumber),
 				...prevState.slice(questionNumber + 1),

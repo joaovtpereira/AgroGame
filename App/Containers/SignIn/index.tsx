@@ -50,6 +50,8 @@ const App: React.FC<Props> = ({navigation}) => {
 							data.Password === snapshot.val()[key].password
 						) {
 							signIn({
+								token: key,
+								questions: snapshot.val()[key].questions ?? [],
 								email: snapshot.val()[key].email,
 								time_course: snapshot.val()[key].time_course,
 								user_image: snapshot.val()[key].user_image,

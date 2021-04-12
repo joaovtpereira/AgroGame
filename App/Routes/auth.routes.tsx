@@ -6,8 +6,12 @@ import Questions from '../Containers/Questions';
 
 const AuthStack = createStackNavigator();
 
-const AuthRoutes: React.FC = () => (
-	<AuthStack.Navigator>
+interface AuthRoutesProps {
+	initialRoute: string;
+}
+
+const AuthRoutes: React.FC<AuthRoutesProps> = ({initialRoute}) => (
+	<AuthStack.Navigator initialRouteName={initialRoute}>
 		<AuthStack.Screen
 			name="Main"
 			component={Main}
