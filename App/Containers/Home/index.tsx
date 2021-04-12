@@ -27,7 +27,7 @@ const Home: React.FC = () => {
 		<Container>
 			<ImageBackground source={Background} resizeMode="contain">
 				<PageContent>
-					<Header />
+					<Header navigation={navigation} />
 					<DataWrapper
 						style={{borderTopLeftRadius: 100, borderTopRightRadius: 100}}>
 						<UserImage

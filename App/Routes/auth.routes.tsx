@@ -3,6 +3,8 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Main from './drawer.routes';
 import Questions from '../Containers/Questions';
+import Configuration from '../Containers/Configuration';
+import Results from '../Containers/Resultados';
 
 const AuthStack = createStackNavigator();
 
@@ -15,6 +17,16 @@ const AuthRoutes: React.FC<AuthRoutesProps> = ({initialRoute}) => (
 		<AuthStack.Screen
 			name="Main"
 			component={Main}
+			options={{headerShown: false}}
+		/>
+		<AuthStack.Screen
+			name="Configuration"
+			component={Configuration}
+			options={{headerShown: false}}
+		/>
+		<AuthStack.Screen
+			name="Results"
+			component={Results}
 			options={{headerShown: false}}
 		/>
 		<AuthStack.Screen

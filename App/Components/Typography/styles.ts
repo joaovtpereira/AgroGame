@@ -14,6 +14,11 @@ const textStyles = {
 		font-weight: bold;
 		text-align: center;
 	`,
+	pageTitle: css`
+		font-size: 32px;
+
+		text-align: left;
+	`,
 	action: css`
 		font-size: 32px;
 		font-weight: bold;
@@ -28,6 +33,9 @@ const textStyles = {
 	primary: css`
 		font-size: 20px;
 		font-weight: bold;
+	`,
+	subLabel: css`
+		font-size: 12px;
 	`,
 	label: css`
 		font-size: 10px;

@@ -13,12 +13,25 @@ import {
 } from './styles';
 import Typography from '../Components/Typography';
 import {useAuth} from '../Contexts/auth';
+import {useNavigation} from '@react-navigation/core';
 
 const CustomDrawer: React.FC = () => {
 	const {signOut, user} = useAuth();
-
+	const navigation = useNavigation();
 	function SignOutUser() {
 		signOut();
+	}
+
+	function handleConfiguration() {
+		navigation.navigate('Configuration');
+	}
+
+	function handleResults() {
+		navigation.navigate('Results');
+	}
+
+	function handleMain() {
+		navigation.navigate('Main');
 	}
 
 	return (
@@ -40,26 +53,35 @@ const CustomDrawer: React.FC = () => {
 							</Typography>
 						</UserDetails>
 					</UserRow>
-					<Icon name="navicon" size={32} color="#322805" />
 				</UserData>
 			</HeaderWrapper>
 
 			<MenuContainer>
 				<MenuItem>
-					<Typography variant="subtitle">Início</Typography>
+					<Typography variant="subtitle" onPress={handleMain}>
+						Início
+					</Typography>
 				</MenuItem>
 
 				<MenuItem>
-					<Typography variant="subtitle">Configurações</Typography>
+					<Typography variant="subtitle" onPress={handleResults}>
+						Resultados
+					</Typography>
 				</MenuItem>
 
 				<MenuItem>
+					<Typography variant="subtitle" onPress={handleConfiguration}>
+						Configurações
+					</Typography>
+				</MenuItem>
+
+				{/* <MenuItem>
 					<Typography variant="subtitle">Termos de uso</Typography>
 				</MenuItem>
 
 				<MenuItem>
 					<Typography variant="subtitle">Vídeo de ajuda</Typography>
-				</MenuItem>
+				</MenuItem> */}
 
 				<MenuItem style={{position: 'absolute', bottom: 0}}>
 					<Typography variant="subtitle" onPress={SignOutUser}>

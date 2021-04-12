@@ -5,13 +5,15 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 
 interface Props {
 	withoutMenu?: boolean;
+	navigation: any;
 }
 
-const Header: React.FC<Props> = ({withoutMenu}) => {
+const Header: React.FC<Props> = ({withoutMenu, navigation}) => {
 	return (
 		<Container>
 			{!withoutMenu && (
 				<Icon
+					onPress={() => navigation.toggleDrawer()}
 					name="navicon"
 					size={32}
 					color="#322805"
