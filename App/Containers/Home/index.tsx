@@ -17,9 +17,12 @@ import Header from '../../Components/Header';
 import Typography from '../../Components/Typography';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import {useNavigation} from '@react-navigation/native';
+import {useAuth} from '../../Contexts/auth';
 
 const Home: React.FC = () => {
 	const navigation = useNavigation();
+	const {user} = useAuth();
+
 	return (
 		<Container>
 			<ImageBackground source={Background} resizeMode="contain">
@@ -29,17 +32,16 @@ const Home: React.FC = () => {
 						style={{borderTopLeftRadius: 100, borderTopRightRadius: 100}}>
 						<UserImage
 							source={{
-								uri:
-									'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nUwuXB6XWMNuMo0OeWUav35g-1AGKTkd8w&usqp=CAU',
+								uri: `content://com.agrogame.provider/shared/Pictures/${user?.user_image}`,
 							}}
 						/>
 
 						<UserWrapper>
 							<Typography variant="primary" color="#FEF0C1">
-								Rafael Santos Pereira
+								{user?.user_name ?? 'Aluno'}
 							</Typography>
 							<Typography variant="subtitle" color="#FFF">
-								Estudante do 7º Período
+								Estudante do {user?.time_course ?? '1'}° Período
 							</Typography>
 						</UserWrapper>
 

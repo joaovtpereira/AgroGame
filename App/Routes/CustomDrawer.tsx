@@ -1,4 +1,6 @@
 import React from 'react';
+import Icon from 'react-native-vector-icons/EvilIcons';
+
 import {
 	DrawerContainer,
 	MenuContainer,
@@ -9,11 +11,16 @@ import {
 	UserRow,
 	UserDetails,
 } from './styles';
-import {View} from 'react-native';
-import Icon from 'react-native-vector-icons/EvilIcons';
 import Typography from '../Components/Typography';
+import {useAuth} from '../Contexts/auth';
 
 const CustomDrawer: React.FC = () => {
+	const {signOut, user} = useAuth();
+
+	function SignOutUser() {
+		signOut();
+	}
+
 	return (
 		<DrawerContainer>
 			<HeaderWrapper>
@@ -21,16 +28,15 @@ const CustomDrawer: React.FC = () => {
 					<UserRow>
 						<UserImage
 							source={{
-								uri:
-									'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nUwuXB6XWMNuMo0OeWUav35g-1AGKTkd8w&usqp=CAU',
+								uri: `content://com.agrogame.provider/shared/Pictures/${user?.user_image}`,
 							}}
 						/>
 						<UserDetails>
 							<Typography variant="subtitle" color="#000">
-								Rafael Santos
+								{user?.user_name ?? 'Aluno'}
 							</Typography>
 							<Typography variant="label" color="#000">
-								Aluno do 7º período
+								Aluno do {user?.time_course ?? '1'} período
 							</Typography>
 						</UserDetails>
 					</UserRow>
@@ -56,7 +62,9 @@ const CustomDrawer: React.FC = () => {
 				</MenuItem>
 
 				<MenuItem style={{position: 'absolute', bottom: 0}}>
-					<Typography variant="subtitle">Sair</Typography>
+					<Typography variant="subtitle" onPress={SignOutUser}>
+						Sair
+					</Typography>
 				</MenuItem>
 			</MenuContainer>
 		</DrawerContainer>

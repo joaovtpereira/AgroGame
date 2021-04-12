@@ -20,10 +20,11 @@ interface Props {
 
 import {Container, TitleWrapper} from './styles';
 import {showMessage} from 'react-native-flash-message';
+import {useAuth} from '../../Contexts/auth';
 
 const App: React.FC<Props> = ({navigation}) => {
 	const formRef = useRef<FormHandles>(null);
-
+	const {signIn} = useAuth();
 	async function handleSignIn(data: FormData) {
 		try {
 			formRef?.current?.setErrors({});
@@ -48,7 +49,12 @@ const App: React.FC<Props> = ({navigation}) => {
 							data.email === snapshot.val()[key].email &&
 							data.Password === snapshot.val()[key].password
 						) {
-							navigation.navigate('Home');
+							signIn({
+								email: snapshot.val()[key].email,
+								time_course: snapshot.val()[key].time_course,
+								user_image: snapshot.val()[key].user_image,
+								user_name: snapshot.val()[key].user_name,
+							});
 						} else {
 							showMessage({
 								message: 'Email ou senha incorretas!',

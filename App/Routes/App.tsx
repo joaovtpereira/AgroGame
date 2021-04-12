@@ -4,12 +4,15 @@ import {NavigationContainer} from '@react-navigation/native';
 import FlashMessage from 'react-native-flash-message';
 
 import Routes from './index';
+import {AuthProvider} from '../Contexts/auth';
 
 const App: React.FC = () => {
 	return (
 		<NavigationContainer>
-			<Routes />
-			<FlashMessage position="top" />
+			<AuthProvider>
+				<Routes />
+				<FlashMessage position="top" />
+			</AuthProvider>
 		</NavigationContainer>
 	);
 };

@@ -8,13 +8,13 @@ export const Container = styled.SafeAreaView`
 	align-content: center;
 `;
 
-export const ScrollContent = styled.View`
+export const ScrollContent = styled.ScrollView`
 	flex: 1;
 	margin-bottom: 8px;
 	width: 100%;
 	padding: 16px 16px;
 
-	justify-content: center;
+	/* justify-content: center; */
 `;
 
 export const TitleWrapper = styled.View`

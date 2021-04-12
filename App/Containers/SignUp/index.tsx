@@ -38,6 +38,7 @@ const SignUp: React.FC<Props> = ({navigation}) => {
 					.email('Digite um e-mail válido.')
 					.required('Nome obrigatório.'),
 				Name: yup.string().required('E-mail obrigatório.'),
+				time_course: yup.string().required('Período obrigatório.'),
 				Password: yup
 					.string()
 					.required('Senha é obrigatória')
@@ -59,6 +60,7 @@ const SignUp: React.FC<Props> = ({navigation}) => {
 					user_name: formRef.current?.getFieldValue('Name'),
 					email: formRef.current?.getFieldValue('Email'),
 					password: formRef.current?.getFieldValue('Password'),
+					time_course: formRef.current?.getFieldValue('time_course'),
 					user_image: photo.fileName,
 				})
 				.then(() => {
@@ -98,6 +100,16 @@ const SignUp: React.FC<Props> = ({navigation}) => {
 						autoCapitalize="none"
 						autoCorrect={false}
 						placeholder="Email"
+						returnKeyType="next"
+						color="#125629"
+					/>
+					<Input
+						name="time_course"
+						icon="ios-book-outline"
+						autoCapitalize="none"
+						autoCorrect={false}
+						placeholder="Período"
+						keyboardType={'numeric'}
 						returnKeyType="next"
 						color="#125629"
 					/>
